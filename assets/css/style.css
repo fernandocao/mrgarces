@@ -1,0 +1,127 @@
+#contenedor_principal{
+  height: 100vh;
+}
+
+#contenedor{
+	background: rgb(255,255,255, .8);
+  border: 10px double black;
+}
+
+.navbar{
+  background: transparent;
+}
+.bg-principal{
+
+    background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+.bg-logo{
+  height: 100vh;
+}
+
+.btn-blanco:hover{
+    border: solid 2px gray;
+    color: gray;
+    background: white;    
+}
+
+@media (min-width: 768px) {
+  .modal-dialog.as-container {
+    width: 80%;
+  }
+}
+@media (min-width: 992px) {
+  .modal-dialog.as-container {
+    width: 80%;
+  }
+}
+@media (min-width: 1200px) {
+  .modal-dialog.as-container {
+    width: 80%;
+  }
+}
+
+.modal-dialog.as-container .modal-content {
+    float: none;
+    margin: auto;
+}
+.btn{
+ border-radius: 0px;
+}
+
+.menuimagen{
+  background: linear-gradient(90deg, rgba(0,0,0, 0.85) 0%, rgba(0, 0,0 , 0.85) 100%), url("../img/bg_principal.jpg") !important;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.form-control{
+  border-radius:0;
+}
+
+.btn-light{
+  color: red !important;
+}                                                                                    
+
+.btnpersonalizado{
+  /*color: #17a2b8;
+  background-color: white;
+  border: 1px solid #17a2b8;
+  margin-right: 0.1rem;*/
+  border: 1px solid #17a2b8;
+  background-color: white;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  padding: 6px 0;
+  margin-right: 5px;  
+  line-height: 1.428571429;
+  border-radius: 25px;
+  color: #17a2b8;
+}
+
+/*.btnpersonalizado:hover{
+  color: white;
+  background-color: #17a2b8;
+  margin-right: 0.1rem;
+  transition: .5s ease-out;  
+}
+*/
+.btnpersonalizadoc{
+  /*color: #dc3545;
+  background-color: white;
+  border: 1px solid #dc3545;
+  margin-right: 0.1rem;*/
+  background-color: #dc3545;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  padding: 6px 0;
+  
+  line-height: 1.428571429;
+  border-radius: 25px;
+  color: white;
+}
+
+/*.btnpersonalizadoc:hover{
+  color: white;
+  background-color: #dc3545;
+  margin-right: 0.1rem;
+}*/
+
+
+.tooltip-inner {
+  background-color: black !important;
+  /*!important is not necessary if you place custom.css at the end of your css calls. For the purpose of this demo, it seems to be required in SO snippet*/
+  color: #fff;
+}
+
+
+.sidenav-second-level{
+  background: none !important ;
+}
+
