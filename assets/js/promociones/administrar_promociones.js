@@ -2,6 +2,29 @@ $.datetimepicker.setLocale('es');
 
 $(document).ready(function(){
 
+    $('#descripcion').autocomplete({
+        source: 'Administrar_promociones/autocompletar?tabla=promociones&campo=descripcion',
+        minLength: 2,
+        html: true,
+        open: function (event, ui) {
+            $(".ui-autocomplete").css("z-index", 100000, "!important");
+        },
+        select: function(event, ui){
+                $.confirm({
+        title: 'Advertencia!!',
+        content: "<h2>El nombre de la promoción ya existe. Verificar si ya se encuentra creada o ingrese un nombre diferente",
+        theme:"supervan",
+        
+        buttons:{
+            
+            Ok: function(){
+                $('#descripcion').val('');
+            }            
+        }
+    });
+        }
+    });
+
     $('#fecha_inicio').datetimepicker({
         lang: 'es',
         timepicker: false,
@@ -20,7 +43,7 @@ $(document).ready(function(){
 
 //Autocompletar campo de servicios   
     $('#descripcion_servicio').autocomplete({
-        source: 'Administrar_promociones/autocompletarservicio?tabla=servicios&campo=descripcion',
+        source: 'Administrar_promociones/autocompletararticulos',
         minLength: 2,
         html: true,
         open: function (event, ui) {
@@ -28,6 +51,31 @@ $(document).ready(function(){
         },
         select: function(event, ui){
             $('#id_servicio').val(ui.item.id);
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "Administrar_promociones/obtenerservicio",
+                data: {
+                id_servicio: $('#id_servicio').val()
+            },
+            success: function (datos) {
+                    if($('#descripcion_servicio').val() == ""){
+                            toastr.warning('No se ha seleccionado ningun servicio');
+                    }else{
+                        if ( $("#ps"+$('#id_servicio').val()).length > 0 ) {
+                            toastr.error('El servicio ya se encuentra en la lista');
+                            $('#id_servicio').val('');
+                            $('#descripcion_producto').val('');
+                            $('#descripcion_servicio').val('');
+                        }else{               
+                            agregarcampos($('#id_servicio').val(), 's', datos);         
+                            toastr.success('El servicio se ha agregado a la lista');
+                            $('#id_servicio').val('');
+                            $('#descripcion_servicio').val('');
+                        }
+                    }
+                }   
+            });
         }
     });
 
@@ -101,6 +149,11 @@ $(document).ready(function(){
           var ctipo = "";
           ctipo = tipo+id;
           $('#contienelista').append('<div class="row form-group" id="'+ctipo+'">'+
+                                                '<div class="col-md-1">'+
+                                                    '<button type="button" class="btn  form-control" onclick="removerrowproducto(\''+ctipo+'\')" ">'+
+                                                        '<i class="fa fa-times-circle"></i>'+
+                                                    '</button>'+
+                                                '</div>'+
                                                 '<div class="col-md-3">'+
                                                 '<input type="text" id="tipo" name="tipo[]" value="'+tipo+'" hidden>'+
                                                     '<input class="form-control" type="text" value="'+id+'" value="readonly="" name="id[]" hidden>'+
@@ -119,11 +172,7 @@ $(document).ready(function(){
                                                 '<div class="col-md-2">'+
                                                   '<input class="form-control" name="subtotal[]" id="subtotal'+ctipo+'" type="text" value="'+datos['precio']+'" required readonly>'+
                                                 '</div>'+
-                                                '<div class="col-md-1">'+
-                                                    '<button type="button" class="btn btn-light form-control" onclick="removerrowproducto(\''+ctipo+'\')" style="color:red;">'+
-                                                        '<i class="fa fa-times"></i>'+
-                                                    '</button>'+
-                                                '</div>'+
+                                     
 
                                     '</div>');
           $('#precio_promo').val(parseFloat($('#precio_promo').val())+parseFloat($('#subtotal'+tipo+id).val()));

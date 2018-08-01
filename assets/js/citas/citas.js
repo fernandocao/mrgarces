@@ -50,33 +50,12 @@ $(document).ready(function(){
 
     var eventos = [];
 
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: "Administrar_citas/listarcitas",
-        success: function (datos) {                                    
-            $.each(datos, function(llave, valor){
-                //eventos.push({title:valor.description, start: valor.start.dateTime.substring(0,10) });
-                $("#calendar").fullCalendar('renderEvent',
-                   {
-                       title: valor.description,
-                       start: valor.start.dateTime.substring(0,10),
-//                       end: endTime,
-                   },
-                true);                
-            });
-        }
-
-    });            
-
-    console.log(eventos);
-
     $('#calendar').fullCalendar({
         events:  eventos ,        
         dayClick: function() {
         }
     });
-    
+    actualizacalendario();                
     inicializacitas();
 });
 
@@ -186,7 +165,7 @@ $("#btnagregarservicio").on('click',function(){
     }else toastr.error("Debe seleccionar el nombre del barbero, la fecha y la hora del servicio.","",1500);
 });
 
-function inicializacitas(){
+function inicializacitas(){   
     rows = '<label>Citas agendadas</label>'+
             '<table class="table-bordered">'+
             '<tr><th>Hora</th><th>10</th><th>20</th><th>30</th><th>40</th><th>50</th></tr>';
@@ -195,6 +174,30 @@ function inicializacitas(){
     }                                    
     rows = rows + '</table>';
     $("#divcitas").html(rows);
+}
+
+function actualizacalendario(){
+    $('#calendar').fullCalendar('removeEvents');
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "Administrar_citas/listarcitas",
+        data: {mes:$('#calendar').fullCalendar('getDate').format('M')},
+        success: function (datos) {                                    
+            $.each(datos, function(llave, valor){
+                //eventos.push({title:valor.description, start: valor.start.dateTime.substring(0,10) });
+                $("#calendar").fullCalendar('renderEvent',
+                   {
+                       title: valor.description,
+                       start: valor.start.dateTime.substring(0,10),
+                       end: valor.start.dateTime.substring(0,10),
+                   },
+                true);                
+                console.log(valor.description, valor.start.dateTime.substring(0,10));
+            });
+        }
+
+    });    
 }
 
 function quitarservicio(div){
@@ -213,7 +216,8 @@ $("#frmagendarcita").on("submit", function(e){
             $('.modal').modal('hide');
             toastr.success("Se agendo la cita.");
             $("#frmagendarcita")[0].reset();
-            $("#divservicios").html("");            
+            $("#divservicios").html("");  
+            actualizacalendario();
         }
     });    
 });

@@ -1,8 +1,6 @@
-  
+   
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * 
- */
+
 class Administar_citas_modelo extends CI_Model {
 	
 	public function __construct() {
@@ -17,7 +15,7 @@ class Administar_citas_modelo extends CI_Model {
 				"fecha" => $datos["fecha"]
 			);
 			$this->db->insert('citas',$datosregistro);
-			//log_message("error",$this->db->last_query());
+			log_message("error",$this->db->last_query());
 			$id_cita = $this->db->insert_id();
 
 			foreach ($datos['id_servicio'] as $key => $value) {
@@ -33,7 +31,7 @@ class Administar_citas_modelo extends CI_Model {
 			// Get the API client and construct the service object.
 			$client = $this->getClient();
 			$service = new Google_Service_Calendar($client);
-
+			log_message("debug", "CHECAR".str_replace(" ", "T", $datos['fecha']).':00-07:00');
 			$event = new Google_Service_Calendar_Event(array(
 			  'summary' => 'Recordatorio',
 			  'location' => 'Mr. Garcés BarberShop',
@@ -41,17 +39,15 @@ class Administar_citas_modelo extends CI_Model {
 			  'start' => array(
 			    //'dateTime' => '2018-07-07T13:34:00-07:00',
 			    			   //2018-07-07T14:30-07:00
-			    'dateTime' => str_replace(" ", "T", $datos['fecha']).':00-07:00',
+			    //2015-12-01T10:00:00.000-05:00
+			    //2018-08-09T09:00.000-05:00
+			    'dateTime' => str_replace(" ", "T", $datos['fecha']).':00.000-05:00',
 			    'timeZone' => 'America/Mexico_City',
 			  ),
 			  'end' => array(
-			    'dateTime' => str_replace(" ", "T", $datos['fecha']).':00-07:00',
+			    'dateTime' => str_replace(" ", "T", $datos['fecha']).':00.000-05:00',
 			    'timeZone' => 'America/Mexico_City',
 			  ),
-			  'recurrence' => array(
-			    'RRULE:FREQ=DAILY;COUNT=2'
-			  ),
-
 			  'attendees' => array(
 				array('email' => $datos['correocliente']),
 			    array('email' => $datos['correobarbero']),
@@ -77,7 +73,7 @@ class Administar_citas_modelo extends CI_Model {
 		//return array("respuesta"=>"ok");
 	}
 
-	function listarcitas(){
+	function listarcitas($mes){
 		// Get the API client and construct the service object.
 		$client = $this->getClient();
 		$service = new Google_Service_Calendar($client);
@@ -88,8 +84,8 @@ class Administar_citas_modelo extends CI_Model {
 		//printf('Event created: %s\n', $event->htmlLink);
 
 		$optParams = array(
-		  'timeMin' => '2018-07-01T00:00:00-00:00',
-		  'timeMax' => '2018-07-31T00:00:00-00:00',
+		  'timeMin' => '2018-'.$mes.'-01T00:00:00-00:00',
+		  'timeMax' => '2018-'.$mes.'-31T00:00:00-00:00',
 		  'orderBy' => 'startTime',
 		  'singleEvents' => true,
 		  'timeMin' => date('c'),

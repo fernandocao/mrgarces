@@ -33,8 +33,12 @@ class Administrar_promociones extends CI_Controller
 		echo json_encode($this->Promociones->obtenerservicio($_POST['id_servicio']));
 	}		
 
-
-
+	function autocompletararticulos(){
+	    if (isset($_GET['term'])){
+	      $q = strtolower($_GET['term']);      
+	      echo json_encode($this->Comunes_modelo->autocompletararticulos($q));
+	    } 		
+	}
 	
 	function autocompletarservicio(){
 	    if (isset($_GET['term'])){
@@ -64,4 +68,11 @@ class Administrar_promociones extends CI_Controller
 	function llenarformularioactualizarproductos(){
 		echo json_encode($this->Promociones->llenarformularioactualizarproductos($_POST["id_promo"]));
 	}	
+	function autocompletar()
+	{
+	    if (isset($_GET['term'])){
+	      $q = strtolower($_GET['term']);      
+	      echo json_encode($this->Comunes_modelo->autocompletar($q, $_GET['tabla'], $_GET['campo']));
+	    } 		
+	}
 }

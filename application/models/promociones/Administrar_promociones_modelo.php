@@ -1,4 +1,4 @@
-
+ 
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Administrar_promociones_modelo extends CI_Model {
@@ -109,7 +109,7 @@ function llenarformularioactualizarproductos($id_promo){
 
 //Obtener los datos del servicio
 function obtenerservicio($id_servicio){
-    $this->db->select("id_servicio, descripcion, precio,0 as costo_unitario");
+    $this->db->select("id_servicio, descripcion, precio, 0 as costo_unitario");
     $this->db->from("servicios");
     $this->db->where('id_servicio', $id_servicio);
     $query=$this->db->get();

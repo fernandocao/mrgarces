@@ -44,8 +44,8 @@
 <!--Contenido del modal-->
     <div class="modal-content">
 <!--Encabezado del Modal-->
-   	 	<div class="modal-header bg-dark border-0">
-        <h5 class="modal-title text-white" id="exampleModalCenterTitle">NUEVA PROMOCIÓN</h5>
+   	 	<div class="modal-header border-0">
+        <h5 class="modal-title" id="exampleModalCenterTitle">NUEVA PROMOCIÓN</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span class="text-white" aria-hidden="true">×</span>
         </button>
@@ -59,36 +59,35 @@
 <!--Inicia Formulario registro de promociones-->
           <form method="POST" id="frmpromocion">
             <input type="text" id="id_promo" name="id_promo" value="0"  hidden/>
-            <h4 class="lead font-weight-bold">Nombre de la promoción</h4>
+            <label >Nombre de la promoción</label>
             <input class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese la clave o descripción de algun servicio" type="text" required>
-            
-            <h4 class="lead font-weight-bold mt-3">Duración:</h4>
-          <div class="row">
-            <div class="form-group col-md-4">
-              <label class="lead">Fecha Inicio</label>
+          <div class="row mt-2">
+            <div class="form-group col-md-6">
+              <label >Fecha Inicio</label>
               <input type="text" class="form-control rounded-0" id="fecha_inicio" name="fecha_inicio" required>
             </div>
-            <div class="form-group col-md-4">
-              <label class="lead">Fecha Fin</label>
+            <div class="form-group col-md-6">
+              <label >Fecha Fin</label>
               <input type="text" class="form-control rounded-0" id="fecha_fin" name="fecha_fin" required>
             </div>
           </div>
 <!--Campo autocompletar servicio-->
-            <h4 class="lead">Agregar un servicio</h4>
+            <label>Agregar concepto a la promoción</label>
             <div class="row">
-              <div class="col-md-9 form-group">
+              <div class="col-md-12 form-group">
                 <input id="id_servicio" name="id_servicio" type="text" hidden readonly>
-                <input class="form-control ui-autocomplete-input" id="descripcion_servicio" name="descripcion_servicio" placeholder="Ingrese la clave o descripción de algun servicio" autocomplete="off" type="text">
+                <input class="form-control ui-autocomplete-input" id="descripcion_servicio" name="descripcion_servicio" placeholder="Ingrese la clave o descripción de algun servicio o producto" autocomplete="off" type="text">
               </div>
               <div class="col-md-3">
                 <input id="id_producto" name="id_producto" type="text" hidden readonly>
-                <button class="btn btn-secondary form-control" id="btnagregarserviciopromo" name="btnagregarserviciopromo">
+                <button class="btn btn-secondary form-control" id="btnagregarserviciopromo" name="btnagregarserviciopromo" hidden>
                   <i class="fa fa-plus"> </i> Agregar
                 </button>
               </div>
             </div>
 
-<!--Campo autocompletar Producto-->            
+<!--Campo autocompletar Producto
+
             <h4 class="lead">Agregar un producto</h4>
             <div class="row">
               <div class="col-md-9 form-group">
@@ -100,7 +99,9 @@
                 </button>
               </div>
             </div>
+            --> 
            <hr> 
+
 <!--Inicia lista de productos-->            
           <div class="row">
             <div class="col-md-9">
@@ -116,7 +117,7 @@
 <!--Encabezados de la lista-->
           
           <div class="row form-group">
-            
+            <div class="col-md-1"></div>
             <div class="col-md-3">
               <p class=" ">Descripción</p>
             </div>
@@ -137,6 +138,7 @@
           <div id="contienelista"></div>
 
           <div class="row">
+            <div class="col-md-1"></div>
             <div class="col-md-9 text-right"><h4 class="lead ">Precio Promoción</h4></div>
             <div class="col-md-2">
               <input class="form-control" name="precio_promo" id="precio_promo" type="text" value="0.00" required readonly>

@@ -1,3 +1,4 @@
+
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * 
@@ -24,7 +25,7 @@ class Comunes_modelo extends CI_Model {
 	}
 
     function autocompletararticulos($cadena){
-        $this->db->select('id_producto as id, descripcion, precio_venta as precio,existencia, "a" as tipo');
+        $this->db->select('id_producto as id, descripcion, precio_venta as precio,existencia, "a" as tipo, costo_unitario');
         $this->db->from('productos');
         $this->db->like('descripcion',$cadena);
         $this->db->where("activo",1,false);
@@ -34,13 +35,14 @@ class Comunes_modelo extends CI_Model {
                 $new_row['id'] = $row["id"];
                 $new_row['value'] = $row["descripcion"];
                 $new_row['precio'] = $row["precio"];
+                $new_row['costo_unitario'] = $row["costo_unitario"];
                 $new_row['existencia'] = $row["existencia"];
                 $new_row['tipo'] = $row["tipo"];
                 $row_set[] = $new_row;
             }
         }
 
-        $this->db->select('id_servicio as id, descripcion, precio, 0 as existencia, "s" as tipo');
+        $this->db->select('id_servicio as id, descripcion, precio, 0 as existencia, "s" as tipo, 0 as costo_unitario');
         $this->db->from('servicios');
         $this->db->like('descripcion',$cadena);
         $this->db->where("activo", 1, false);
@@ -50,6 +52,7 @@ class Comunes_modelo extends CI_Model {
                 $new_row['id'] = $row["id"];
                 $new_row['value'] = $row["descripcion"];
                 $new_row['precio'] = $row["precio"];
+                $new_row['costo_unitario'] = $row["costo_unitario"];
                 $new_row['existencia'] = $row["existencia"];
                 $new_row['tipo'] = $row["tipo"];
                 $row_set[] = $new_row;

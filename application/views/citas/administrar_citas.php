@@ -1,6 +1,6 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Citas</a>
+          <a>Citas</a>
         </li>
         <li class="breadcrumb-item active">Administrador de citas</li>
       </ol>
@@ -56,7 +56,7 @@
           </div>
 -->              
         </div>
-        <div class="card-footer small text-muted">Mimimi fififi</div>   
+        <div class="card-footer small text-muted">* Las citas agendadas se mostraran durante todo el mes</div>   
     </div>   
 
 <!--Modal registrar personal-->

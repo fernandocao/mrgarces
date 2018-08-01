@@ -23,6 +23,18 @@ class Punto_venta_modelo extends CI_Model {
 			$this->db->insert("ventas", $datosventa);		
 			$id_venta= $this->db->insert_id();
 
+			if( $datos["barbero"]>0 ){
+	 			$datosgasto = array(
+	 				"id_tipogasto" => 1,
+	 				"monto" => $datos["gtotal"] * 0.10,
+	 				"tipopago" => 0,
+	 				"id_barbero" => $datos["barbero"]
+	 			);
+	 			$CI =& get_instance();
+	      		$CI->load->model('gastos/Administrar_gastos_modelo', 'gastos');
+	      		$result = $CI->gastos->registrargasto($datosgasto);
+	      	}
+
 			foreach ($datos['ids'] as $indice => $valor) {
                 //log_message("debug", $datos['tipos'][$indice]);
                 $datosarticulo = array(

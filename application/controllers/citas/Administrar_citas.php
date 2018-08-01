@@ -44,7 +44,7 @@ class Administrar_citas extends CI_Controller
 	}
 
 	function listarcitas(){
-		echo json_encode($this->citas->listarcitas());
+		echo json_encode($this->citas->listarcitas($_POST["mes"]));
 	}
 
 	function obtenercitas(){
