@@ -60,18 +60,18 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMulti">
 
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Productos">
+              <a class="nav-link" href="<?php echo site_url('productos/administrar_productos'); ?> ">
+                <i class="fa fa-cart-plus"></i>
+                <span class="nav-link-text">Inventario</span>
+              </a>
+            </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Servicios">
               <a class="nav-link" href="<?php echo site_url('servicios/administrar_servicios'); ?> ">
                 <i class="fa fa-tags"></i>
                 <span class="nav-link-text">Servicios</span>
               </a>
             </li>             
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Productos">
-              <a class="nav-link" href="<?php echo site_url('productos/administrar_productos'); ?> ">
-                <i class="fa fa-cart-plus"></i>
-                <span class="nav-link-text">Productos</span>
-              </a>
-            </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Promociones">
               <a class="nav-link" href="<?php echo site_url('promociones/administrar_promociones'); ?> ">
                 <i class="fa fa-gift"></i>
@@ -98,10 +98,13 @@
             <i class="fa fa-fw fa-users"></i>
             <span class="nav-link-text">Clientes</span>
           </a>
-        </li>  
-
-
-            
+        </li>             
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Reportes">
+          <a class="nav-link" href="<?php echo site_url('reportes/reportes'); ?> ">
+            <i class="fa fa-copy"></i>
+            <span class="nav-link-text">Reportes</span>
+          </a>
+        </li>             
 
       </ul>      
       <ul class="navbar-nav sidenav-toggler">

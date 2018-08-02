@@ -23,38 +23,8 @@
       </div>
       <div class="card">
         <div class="card-header" ><i class="fa fa-calendar"></i> Citas agendadas</div>
-        <div class="card-body">
-          
-          <div id='calendar' ></div>                            
-<!--          
-          <div class="table-responsive" >
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
-                </tr>
-              </tfoot>
-              <tbody>
-            
-              </tbody>
-            </table>
-          </div>
--->              
+        <div class="card-body">          
+          <div id='calendar' ></div>                                         
         </div>
         <div class="card-footer small text-muted">* Las citas agendadas se mostraran durante todo el mes</div>   
     </div>   
@@ -133,7 +103,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white ">
-                <h5 class="modal-title font-weight-bold" id="exampleModalLabel">PERFIL PERSONA</h5>
+                <h5 class="modal-title font-weight-bold" id="exampleModalLabel">Persona</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

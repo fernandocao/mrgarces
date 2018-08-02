@@ -52,8 +52,13 @@ $(document).ready(function(){
 
     $('#calendar').fullCalendar({
         events:  eventos ,        
-        dayClick: function() {
+/*
+        dayClick: function(date, jsEvent, view) {
+            $('#calendar').fullCalendar('gotoDate',date);
+            $('#calendar').fullCalendar('changeView','agendaDay');
+
         }
+*/        
     });
     actualizacalendario();                
     inicializacitas();
@@ -156,9 +161,11 @@ $("#btnagregarservicio").on('click',function(){
                                         "<div id='ids' hidden >"+
                                             "<input type='text' name='id_servicio[]' value='"+$("#id_servicio").val()+"' />"+
                                         "</div>"+
+                                        "<i class='fa fa-times-circle btn' onclick='quitarservicio(\"div"+$("#id_servicio").val()+"\")'></i>"+
                                         "<div class='col-md-8'>"+"<p class='form-control'>"+$("#servicio").val()+"</p></div>"+
                                         "<div id='divduracion' class='col-md-4'><div class='input-group'><input class='form-control' type='text' name='duraciones[]' value='"+$("#duracion").val()+"' />"+
-                                        "<a href='#' onclick='quitarservicio(div"+$("#id_servicio").val()+")'><i class='fa fa-times btn btn-light'></i></a></div></div>"+
+                                        
+                                        "</div></div>"+
                                     "</div>");
         }else toastr.error("Tiene citas agendadas en esta fecha y horario.", "Citas", 1500);
         
@@ -201,7 +208,8 @@ function actualizacalendario(){
 }
 
 function quitarservicio(div){
-	$("#divservicios").remove(div);
+	console.log(div);
+    $("#divservicios").remove(div);
 }
 
 $("#frmagendarcita").on("submit", function(e){

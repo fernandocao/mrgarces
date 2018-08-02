@@ -24,6 +24,21 @@ class Comunes_modelo extends CI_Model {
         }
 	}
 
+    function autocompletargastos($cadena) {
+        $this->db->select('id_tipogasto, concepto');
+        $this->db->from("gastostipo");
+        $this->db->like("concepto",$cadena);
+        $query = $this->db->get();
+        if($query->num_rows() > 0){
+            foreach ($query->result_array() as $row){
+                $new_row['id'] = $row["id_tipogasto"];
+                $new_row['value'] = $row["concepto"];
+                $row_set[] = $new_row;
+            }
+            return $row_set;
+        }
+    }
+
     function autocompletararticulos($cadena){
         $this->db->select('id_producto as id, descripcion, precio_venta as precio,existencia, "a" as tipo, costo_unitario');
         $this->db->from('productos');
@@ -123,6 +138,7 @@ class Comunes_modelo extends CI_Model {
             foreach ($query->result_array() as $row){
                 $new_row['id'] = $row["id_servicio"];
                 $new_row['value'] = $row["descripcion"];
+                $new_row['precio'] = $row["precio"];
                 $new_row['duracion'] = $row["duracion"];
                 $row_set[] = $new_row;
             }

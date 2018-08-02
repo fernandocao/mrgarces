@@ -51,7 +51,7 @@ class Administrar_promociones_modelo extends CI_Model {
         }
 
 
-        function obtenerpromociones(){
+        function obtenerpromociones($activo){
             $this->db->select("promociones.id_promo, promociones.activo, promociones.vendido, promociones.descripcion,promociones.precio_promo, GROUP_CONCAT(CONCAT(servicios_promo.cantidad,' '), servicios.descripcion SEPARATOR ', ') as servicios, GROUP_CONCAT(CONCAT(productos_promo.cantidad,' '),productos.descripcion SEPARATOR ', ') as productos,  promociones.fecha_inicio, promociones.fecha_fin");
             /*sum(servicios_promo.precio) as precio_promo,*/
             $this->db->from("promociones");
@@ -61,29 +61,15 @@ class Administrar_promociones_modelo extends CI_Model {
             $this->db->join("productos", "productos_promo.id_producto = productos.id_producto", 'left');
             //$this->db->where('productos_promo.id_promo is not null');
             //$this->db->where('servicios_promo.id_promo is not null');
-            $this->db->where('promociones.fecha_fin >=', date('Y-m-d'));
-            $this->db->where('promociones.activo', 1, false);
+            if($activo!=2) {
+                $this->db->where("promociones.activo", $activo, false); 
+                $this->db->where('promociones.fecha_fin >=', date('Y-m-d'));
+            }
             $this->db->group_by('promociones.id_promo');
             $query=$this->db->get();
             log_message('error', $this->db->last_query());
             return $query->result();
         }
-
-        function obtenerpromocionesvencidas(){
-            $this->db->select("promociones.id_promo, promociones.descripcion,promociones.precio_promo, GROUP_CONCAT(servicios.descripcion SEPARATOR ', ') as servicios, GROUP_CONCAT(productos.descripcion SEPARATOR ', ') as productos,  promociones.fecha_inicio, promociones.fecha_fin");
-            /*sum(servicios_promo.precio) as precio_promo,*/
-            $this->db->from("promociones");
-            $this->db->join("servicios_promo", "promociones.id_promo = servicios_promo.id_promo", 'left');
-            $this->db->join("servicios", "servicios.id_servicio = servicios_promo.id_servicio", 'left');
-            $this->db->join("productos_promo", "promociones.id_promo = productos_promo.id_promo", 'left');
-            $this->db->join("productos", "productos_promo.id_producto = productos.id_producto", 'left');
-            //$this->db->where('productos_promo.id_promo is not null');
-            //$this->db->where('servicios_promo.id_promo is not null');
-            $this->db->group_by('promociones.id_promo');
-            $query=$this->db->get();
-            log_message('error', $this->db->last_query());
-            return $query->result();
-   }
 
 //Funcion para llenar el formulario  de actualizar
 function llenarformularioactualizarservicios($id_promo){
@@ -129,6 +115,12 @@ function obtenerproducto($id_producto){
 
 function eliminarpromocion($id_promo){
     $this->db->set("activo",0);
+    $this->db->where("id_promo",$id_promo);
+    $this->db->update("promociones");
+}
+
+function habilitarpromocion($id_promo){
+    $this->db->set("activo",1);
     $this->db->where("id_promo",$id_promo);
     $this->db->update("promociones");
 }

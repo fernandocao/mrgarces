@@ -18,5 +18,29 @@ class Administrar_gastos extends CI_Controller
 	function registrargasto(){
 		echo json_encode($this->gastos->registrargasto($_POST));
 	}
+
+  	function obtenergastos(){
+		echo json_encode($this->gastos->obtenergastos($_POST["activo"]));
+	}
+
+	function eliminargasto(){
+		echo json_encode($this->gastos->eliminargasto($_POST["id_gasto"]));
+	}	
+	
+	function habilitargasto(){
+		echo json_encode($this->gastos->habilitargasto($_POST["id_gasto"]));
+	}	
+    
+    function llenarformularioactualizar(){
+		echo json_encode($this->gastos->llenarformularioactualizar($_POST["id_gasto"]));
+	}	
+
+	function autocompletargastos()
+	{
+	    if (isset($_GET['term'])){
+	      $q = strtolower($_GET['term']);      
+	      echo json_encode($this->Comunes_modelo->autocompletargastos($q));
+	    } 		
+	}
     
 }

@@ -40,6 +40,8 @@
               <div class="row mb-2">              
                 <div class="col-md-12  input-group">                                
                   <input type="text" name="id_cliente" id="id_cliente" value="0" hidden />
+                  <input type="text" name="id_tipogasto" id="id_tipogasto" value="1" hidden />
+                  <input type="text" name="tipopago" id="tipopago" value="0" hidden />
                   <input type="text" class="input form-control" name="cliente" id="cliente" placeholder="Público en general" />
                   <i class="fa fa-user-plus btn" id="btnagregarpersonal" data-toggle="modal" data-target="#modalagregarpersonal"></i> 
                   <i class="fa fa-search btn" id="btnmostrarhistorial" data-toggle="modal" data-target="#modalverhistorial" hidden></i>

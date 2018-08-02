@@ -106,6 +106,7 @@ function obtenerbarbero(){
 function actualizacambio(){
     if( $("#gtotal").val()>0){
         if($("#pago").val()>0 ) $("#cambio").val( parseFloat($("#pago").val()) - parseFloat($("#gtotal").val()) );        
+        else $("#cambio").val( 0 );
     }else $("#cambio").val( 0 );
 }
 

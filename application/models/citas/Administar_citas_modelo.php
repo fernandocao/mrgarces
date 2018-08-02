@@ -35,7 +35,7 @@ class Administar_citas_modelo extends CI_Model {
 			$event = new Google_Service_Calendar_Event(array(
 			  'summary' => 'Recordatorio',
 			  'location' => 'Mr. Garcés BarberShop',
-			  'description' => $datos['barbero'],
+			  'description' => $datos['barbero']." ".$datos['fecha'],
 			  'start' => array(
 			    //'dateTime' => '2018-07-07T13:34:00-07:00',
 			    			   //2018-07-07T14:30-07:00

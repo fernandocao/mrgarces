@@ -26,8 +26,12 @@ class Administrar_promociones extends CI_Controller
 	}	
 
     function obtenerpromociones(){
-		echo json_encode($this->Promociones->obtenerpromociones());
+		echo json_encode($this->Promociones->obtenerpromociones($_POST['activo']));
 	}
+	function habilitarpromocion(){
+		echo json_encode($this->Promociones->habilitarpromocion($_POST["id_promo"]));
+	}	
+    
 	
 	function obtenerservicio(){
 		echo json_encode($this->Promociones->obtenerservicio($_POST['id_servicio']));

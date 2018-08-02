@@ -68,7 +68,38 @@ $(document).ready(function(){
                             $('#descripcion_producto').val('');
                             $('#descripcion_servicio').val('');
                         }else{               
-                            agregarcampos($('#id_servicio').val(), 's', datos);         
+                            //agregarcampos($('#id_servicio').val(), 's', datos);   
+                            var ctipo = "";
+                            ctipo = ui.item.tipo+ui.item.id;
+                            $('#contienelista').append('<div class="row form-group" id="'+ctipo+'">'+
+                                                                '<div class="col-md-1">'+
+                                                                    '<button type="button" class="btn  form-control" onclick="removerrowproducto(\''+ctipo+'\')" ">'+
+                                                                        '<i class="fa fa-times-circle"></i>'+
+                                                                    '</button>'+
+                                                                '</div>'+
+                                                                '<div class="col-md-3">'+
+                                                                '<input type="text" id="tipo" name="tipo[]" value="'+ui.item.tipo+'" hidden>'+
+                                                                    '<input class="form-control" type="text" value="'+ui.item.id+'" value="readonly="" name="id[]" hidden>'+
+                                                                    '<label class="form-control">'+ui.item.value+'</label>'+
+                                                                '</div>'+
+
+                                                                '<div class="col-md-2">'+
+                                                                    '<input class="form-control cantidad" type="number" min="1" value="1" id="cantidad'+ctipo+'" name="cantidad[]">'+
+                                                                '</div>'+
+                                                                '<div class="col-md-2">'+
+                                                                '<input class="form-control" type="text" name="" value="'+ui.item.costo_unitario+'" readonly>'+
+                                                                '</div>'+
+                                                                '<div class="col-md-2">'+
+                                                                    '<input class="form-control precio" id="precio'+ctipo+'" type="text" name="precio[]" value="'+ui.item.precio+'">'+
+                                                                '</div>'+
+                                                                '<div class="col-md-2">'+
+                                                                  '<input class="form-control" name="subtotal[]" id="subtotal'+ctipo+'" type="text" value="'+ui.item.precio+'" required readonly>'+
+                                                                '</div>'+
+                                                     
+
+                                                    '</div>');
+                            $('#precio_promo').val(parseFloat($('#precio_promo').val())+parseFloat($('#subtotal'+ctipo).val()));                             
+
                             toastr.success('El servicio se ha agregado a la lista');
                             $('#id_servicio').val('');
                             $('#descripcion_servicio').val('');
@@ -91,7 +122,7 @@ $(document).ready(function(){
             $('#id_producto').val(ui.item.id);
         }
     });
-    obtenerpromociones();
+    obtenerpromociones(1);
 
     });
    
@@ -108,7 +139,7 @@ $(document).ready(function(){
             success: function (datos) {
                 $('.modal').modal('hide');
                 
-                obtenerpromociones();
+                obtenerpromociones(1);
 
             }
         });
@@ -231,15 +262,20 @@ $("#btnagregarpromocion").click(function () {
     $("#frmpromocion")[0].reset();
 });
 
+function obtenerpromociones(activo){
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "Administrar_promociones/obtenerpromociones",
+        data:{activo:activo},
+        success: function(datos){
+            creartabla(datos,activo);
+        }
+    });
+}
 
-
-function obtenerpromociones(){
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "Administrar_promociones/obtenerpromociones",
-            success: function (datos) {
-                var fila = '';
+function creartabla(datos, activo){
+            var fila = '';
                 fila = fila + '<div class="table-responsive mt-3">'+
                                 '<table class="table table-stripped" id="tablapromociones" width="100%" cellspacing="0">'+
                                     '<thead class="">'+
@@ -276,17 +312,26 @@ function obtenerpromociones(){
                     '<td>'+value.fecha_fin+'</td>'+
                     '<td><div class="row p-0">'+
                     '<div class="mt-2">';
-                    if(value.vendido == 0){
+
+                    if(value.vendido == 0 && value.activo == 1){
                         fila = fila + '<button class=" btnpersonalizado" id="btnactualizarpromocion" name="btnactualizarpromocion"  data-target=".agregarpromocion" data-toggle="modal" onclick="llenarformularioactualizar('+value.id_promo+')">'+
                            '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'+
                         '</button>';
                     }
-                    fila = fila + '</div>'+
+
+                    if( (value.vendido == 1 || value.vendido == 0) && value.activo == 1){
+                                            fila = fila + '</div>'+
                     '<div class="mt-2">'+
                         '<button class=" btnpersonalizadoc" id="btneliminarpromocion" onclick="eliminarpromocion('+value.id_promo+')" name="btneliminarpromocion">'+
                             '<i class="fa fa-times" aria-hidden="true"></i>'+
-                       '</button>'+
-                    '</div>'+
+                       '</button>'; 
+                    }
+
+                     if(value.activo == 0){
+                        fila = fila + '<button id="btnhabilitar" name="btnhabilitar" class="btn btnpersonalizado form-control mt-1"  onclick="habilitarpromocion('+value.id_promo+')" title="Habilitar"><i class="fa fa-check-square-o" aria-hidden="true"></i></button>';
+                    }
+                    
+                    fila = fila +'</div>'+
                     '</div></td>'+
                 '</tr>';
                 });
@@ -295,7 +340,7 @@ function obtenerpromociones(){
                 '</table></div></div><div class="card-footer small text-muted mt-3"> Administrador de promociones</div>';
                 '</table></div>'+
         
-                $("#divreporte").html(fila);
+                $(".reporte").html(fila);
                 
                 $('#tablapromociones').dataTable({
                    language: {
@@ -325,8 +370,7 @@ function obtenerpromociones(){
                 });
     
             }
-        });
-    }
+    
 
 $(document).on("change, keyup", ".precio", function(){
     var id = $(this).get(0).id.substr(6);
@@ -431,7 +475,7 @@ function eliminarpromocion(id_promo) {
                             "hideMethod": "fadeOut"
                         }
                         toastr.error("El registro del proveedor ha sido borrado.", "Realizado!!"),
-                        obtenerpromociones();
+                        obtenerpromociones(1);
                         
                     }
                 });
@@ -440,4 +484,52 @@ function eliminarpromocion(id_promo) {
             }            
         }
     });
+}
+
+function habilitarpromocion(id_promo) {
+    $.confirm({
+        title: false,
+        content: "¿Realmente desea habilitar de nuevo este proveedor?",
+        theme:"supervan",
+        
+        buttons:{
+            
+            Si: function(){
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    url: "Administrar_promociones/habilitarpromocion",
+                    data: {
+                        id_promo: id_promo
+                    },
+                    success: function (datos) {
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": true,
+                            "positionClass": "toast-top-right",
+                            "preventDuplicates": false,
+                            "onclick": null,
+                            "showDuration": "300",
+                            "hideDuration": "1000",
+                            "timeOut": "5000",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut"
+                        }
+                        toastr.success("La promocion  ha sido nuevamente habilitada.", "Realizado!!"),
+                        obtenerpromociones(0);
+                        
+                    }
+                });
+            },Cancelar:{
+                text: 'No',
+                    
+            }
+        }
+    });
+
 }

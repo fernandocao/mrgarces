@@ -24,6 +24,62 @@
     </div>
     </div>
   </div>
+<!---Empiezan las tabs -->
+<div  class="container-fluid">
+<nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active activos" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true" onclick="obtenerpromociones('1')" >Activos</a>
+        <a class="nav-item nav-link bajas" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false" onclick="obtenerpromociones('0')" >Bajas</a>
+        <a class="nav-item nav-link todos" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false" onclick="obtenerpromociones('2')">Todos</a>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-tabContent">
+      
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-calendar"></i> Promociones activas</div>
+            <div class="card-body p-0">
+                <div class="container-fluid mt-2 reporte" ></div>  
+            </div>
+            <div class="card-footer small text-muted">Promociones activas</div>   
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-calendar"></i> Promociones inactivas</div>
+            <div class="card-body p-0">
+                <div class="container-fluid mt-2 p-0 reporte"></div>  
+            </div>
+            <div class="card-footer small text-muted">Promociones inactivas</div>   
+        </div>
+      
+      </div>
+
+      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+              <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-calendar"></i> Todas las promociones</div>
+            <div class="card-body p-0">
+                <div class="container-fluid mt-2 reporte" ></div>  
+            </div>
+            <div class="card-footer small text-muted">Todas las promociones</div>   
+        </div>
+      
+      </div>
+
+    </div>
+</div>
+
+
+
+<!---Terminan las tabs -->
+
+
+<!--
 <div class="card mb-3">
     <div class="card-header">
       <i class="fa fa-calendar"></i> Administrador de Promociones
@@ -32,7 +88,7 @@
         <div id="divreporte"> </div>                                
       </div>
   </div>
-  
+-->
 </div>
 
 <!--Fin encabezado de promociones-->
@@ -44,7 +100,7 @@
 <!--Contenido del modal-->
     <div class="modal-content">
 <!--Encabezado del Modal-->
-   	 	<div class="modal-header border-0">
+   	 	<div class="modal-header">
         <h5 class="modal-title" id="exampleModalCenterTitle">NUEVA PROMOCIÓN</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span class="text-white" aria-hidden="true">×</span>
@@ -146,15 +202,16 @@
             
 
           </div>
-
-          <div class="row mt-4">
-            <div class="col-md-2 ml-auto">
+          <div class="modal-footer mt-2">
+          <div class="row">
+            <div class="ml-auto mr-2">
               <button type="button" class="btn btn-secondary form-control" data-dismiss="modal">Cancelar</button>
             </div>
-            <div class="col-md-2">
+            <div class="">
               <button id="btnregistrarpromo" type="submit" class="btn btn-secondary form-control">Aceptar</button>
             </div>
           </div>  
+          </div>
       </form>
 <!--Termina Form-->      
     </div>
