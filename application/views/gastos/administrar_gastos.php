@@ -91,7 +91,7 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label class="text-small">Fecha</label>
-                            <input type="text" class="form-control border-none" id="fecha" name="fecha" value="<?php echo date("Y-m-d");?>">
+                            <input type="text" class="form-control border-none" id="fecha" name="fecha" value="<?php echo date("Y-m-d H:i:s");?>">
                         </div>
                     </div>
                     <div class="row">

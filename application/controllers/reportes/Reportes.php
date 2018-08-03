@@ -16,7 +16,7 @@ class Reportes extends CI_Controller
 	}
 
 	function reporteventas(){
-		echo json_encode($this->reportes->reporteventas( $_POST["tipo"] ));
+		echo json_encode($this->reportes->reporteventas( $_POST ));
 	}
 
 }

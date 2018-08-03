@@ -22,7 +22,7 @@ $(document).ready(function(){
     });
 
     obtenergastos(1);
-   //Termina funciones de autocompletar
+   //Termina funciones de autocompletars
     //Muestra los proveedores existentes
 
 });
@@ -36,7 +36,10 @@ $("#frmregistrargasto").on("submit", function (e) {
         url: "Administrar_gastos/registrargasto",
         success: function (datos) {
             $('.modal').modal('hide');
-            toastr.success("El gasto se ha registrado exitosamente!!");
+
+            if(datos.id_gasto==0)toastr.success("El <proveedores></proveedores> se registro exitosamente");
+            else toastr.success("El proveedor se actualizo exitosamente");
+            obtenergastos(1);
         }
     });
 });
@@ -49,6 +52,7 @@ function obtenergastos(activo) {
         data:{activo:activo},
         success: function (datos) {
             creartabla(datos, activo);
+
         }
     });
 }
@@ -102,20 +106,25 @@ function obtenergastos(activo) {
                 '<td>'+value.concepto+'</td>'+
                 '<td>'+value.fecha+'</td>'+
                 '<td>'+value.monto+'</td>'+
-                '<td>'+$tipopago+'</td>'+
-                '<td>'+value.observaciones+'</td>'+
+                '<td>'+$tipopago+'</td>';
+                if (value.observaciones == '') {
+                fila = fila + '<td>Sin observaciones</td>';
+                }else{
+                    fila = fila + '<td>'+value.observaciones+'</td>';
+                };
+                
 
-                '<td>';
+                fila = fila +'<td>';
                 if(value.activo == 1){
-                    fila = fila +'<button class="btn btnpersonalizado" id="btnactualizargasto" name="btnactualizar"  data-target=".agregargasto" data-toggle="modal" onclick="llenarformularioactualizar('+value.id_gasto+')">'+
+                    fila = fila +'<button class="btn btnpersonalizado" id="btnactualizargasto" name="btnactualizargasto"  data-target=".agregargasto" data-toggle="modal" onclick="llenarformularioactualizar('+value.id_gasto+')">'+
                        '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'+
+                    '</button>'+
+                    '<button class="btn btnpersonalizadoc" id="btneliminargasto" onclick="eliminargasto('+value.id_gasto+')" name="btneliminargasto">'+
+                        '<i class="fa fa-times" aria-hidden="true"></i>'+
                     '</button>';
                 };
                     
-                    fila = fila + '<button class="btn btnpersonalizadoc" id="btneliminargasto" onclick="eliminargasto('+value.id_gasto+')" name="btneliminargasto">'+
-                        '<i class="fa fa-times" aria-hidden="true"></i>'+
-                    '</button>'+
-                '</td>'+
+                    fila = fila + '</td>'+
             '</tr>';
             });
 
@@ -166,6 +175,7 @@ function llenarformularioactualizar(id_gasto) {
             id_gasto:id_gasto
         },
         success: function (value) {
+
             $('#id_gasto').val(value.id_gasto)
             $('#id_tipogasto').val(value.id_tipogasto);
             $('#fecha').val(value.fecha);
@@ -173,7 +183,12 @@ function llenarformularioactualizar(id_gasto) {
             $('#tipopago').val(value.tipopago);
             $('#monto').val(value.monto);
             $('#observaciones').text(value.observaciones);
+            
+            if($('#id_gasto').val() != 0){
+                $('#gastostipo').attr('readonly', true);
             }
+            }
+
     });
 }
 
@@ -227,4 +242,8 @@ function eliminargasto(id_gasto) {
 
 $("#btnagregargasto").click(function () {
     $("#frmregistrargasto")[0].reset();
+    $("#gastostipo").attr('readonly', false);
 });
+
+
+
