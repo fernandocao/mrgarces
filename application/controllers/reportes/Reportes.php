@@ -15,8 +15,8 @@ class Reportes extends CI_Controller
 		$this->load->view('footer.php', array('libreria' => 'assets/js/reportes/reportes.js'));
 	}
 
-	function reporteventas(){
-		echo json_encode($this->reportes->reporteventas( $_POST ));
+	function reportes(){
+		echo json_encode($this->reportes->reportes( $_POST ));
 	}
 
 }

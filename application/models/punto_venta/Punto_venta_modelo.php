@@ -12,7 +12,7 @@ class Punto_venta_modelo extends CI_Model {
 	function realizarventa($datos){
 		if($datos["id_venta"]==0){
 	        $dato = $this->session->userdata('logged_in');	        
-			$datosventa = array(
+			$datosventa = array(				
 				"id_cliente" => $datos["id_cliente"],
 				"id_empleado" => $datos["barbero"],
 				"descuento" => $datos["descuento"],
@@ -25,10 +25,12 @@ class Punto_venta_modelo extends CI_Model {
 
 			if( $datos["barbero"]>0 ){
 	 			$datosgasto = array(
+	 				"id_gasto" => 0,
 	 				"id_tipogasto" => 1,
 	 				"monto" => $datos["gtotal"] * 0.10,
 	 				"tipopago" => 0,
-	 				"id_barbero" => $datos["barbero"]
+	 				"id_barbero" => $datos["barbero"],
+	 				"observaciones" => "ID venta: ".$id_venta
 	 			);
 	 			$CI =& get_instance();
 	      		$CI->load->model('gastos/Administrar_gastos_modelo', 'gastos');

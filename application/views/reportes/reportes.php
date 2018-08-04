@@ -9,6 +9,9 @@
       <div class="col-md-4">
         <select class="form-control" id="tipo" name="tipo">
           <option value="1">Ventas</option>
+          <option value="2">Comisiones</option>
+          <option value="3">Gastos</option>
+          <option value="4">Inventarios</option>
         </select>
       </div>      
       <div class="col-md-8 border">
